@@ -17,7 +17,9 @@ class App extends React.Component {
     return (
       <div>
         <h2>Hello!</h2>
-        {this.renderItems()}
+        <table>
+          <tbody>{this.renderItems()}</tbody>
+        </table>
       </div>
     );
   }
