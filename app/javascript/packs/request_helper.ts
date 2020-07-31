@@ -1,5 +1,6 @@
-const makeRequest = (url, method, data) => {
+export const makeRequest = (url, method, data) => {
   return fetch(url, {
+    method,
     body: JSON.stringify(data),
     headers: { "Content-type": "application/json" },
   });
