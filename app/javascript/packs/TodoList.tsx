@@ -1,26 +1,28 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import Todo from "./Todo";
+import { Creators } from "./actions";
 
-class TodoList extends React.Component {
-  state = {
-    items: [{ name: "piwo", done: false }],
-  };
+interface IProps {
+  items: Array<{ name: string; done: boolean }>;
+  toggleItem: (i: number) => void;
+  changeName: (name: string) => void;
+}
 
+class TodoList extends React.Component<IProps> {
   handleToggle = (i: number) => {
-    const { items } = this.state;
-    const newItems = [...items];
-    newItems.splice(i, 1, { ...items[i], done: !items[i].done });
-
-    this.setState({ items: newItems });
+    // this.props.dispatch({ type: "TOGGLE_TODO", index: i });
+    // this.props.dispatch(Creators.toggleTodo(i));
+    this.props.toggleItem(i);
   };
 
-  handleClick = () => {
-    this.setState({ clicked: true });
+  handleNameChange = (e) => {
+    this.props.changeName(e.target.value);
   };
 
   renderItems = () => {
-    return this.state.items.map((item, i) => (
+    return this.props.items.map((item, i) => (
       <Todo
         item={item}
         index={i}
@@ -33,6 +35,7 @@ class TodoList extends React.Component {
   render() {
     return (
       <>
+        <input type="text" onChange={this.handleNameChange} />
         <table>
           <tbody>{this.renderItems()}</tbody>
         </table>
@@ -41,4 +44,13 @@ class TodoList extends React.Component {
   }
 }
 
-export default TodoList;
+const mapStateToProps = (state) => ({
+  items: state.todos,
+});
+
+const mapDispatchToProps = {
+  toggleItem: Creators.toggleTodo,
+  changeName: Creators.changeName,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
