@@ -31,6 +31,11 @@ const rootReducer = (state, action) => {
   }
 };
 
-const configureStore = () => createStore(rootReducer, INITIAL_STATE);
+const configureStore = () =>
+  createStore(
+    rootReducer,
+    INITIAL_STATE,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
 
 export default configureStore;
