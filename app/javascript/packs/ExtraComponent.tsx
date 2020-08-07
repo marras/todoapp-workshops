@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-class ExtraComponent extends React.PureComponent {
-  render() {
-    console.log("RENDERING ExtraComponent");
-    return <h4>Prograils rulez!</h4>;
-  }
-}
+const ExtraComponent = () => {
+  let todos = [];
+
+  todos = useSelector((state) => state.todos);
+  const name = useSelector((state) => state.username);
+
+  const text = `${name} says: Prograils rules! We have ${todos.length} things to do.`;
+
+  return <h4>{text}</h4>;
+};
 
 export default ExtraComponent;
